@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="nosteamstarter.vcxproj" Id="12734315-ec50-4e01-ba7e-34a2058d44ab" />
+</Solution>
