@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include <bitset>
 #include <vector>
+#include <filesystem>
 
 std::map<uintptr_t, std::vector<byte>> steam_api_patches{
 	{0xB68D, {0xB8,0x01, 0x00, 0x00, 0x00}},	// mov eax,1
@@ -73,7 +74,7 @@ HMODULE GetModule(DWORD pid, const wchar_t* moduleName) {
 }
 
 int main(void) {
-	STARTUPINFO si;
+	STARTUPINFOA si;
 	PROCESS_INFORMATION pi;
 
 	ZeroMemory(&si, sizeof(si));
@@ -81,15 +82,23 @@ int main(void) {
 	ZeroMemory(&pi, sizeof(pi));
 
 	wchar_t szWorkDir[] = L"D:\\SteamLibrary\\steamapps\\common\\City Car Driving\\bin\\win32";
-	if (!CreateProcessW(
-		L"D:\\SteamLibrary\\steamapps\\common\\City Car Driving\\bin\\win32\\starter.exe",
+
+	std::string filePath = "starter.exe";
+	if (!std::filesystem::exists(filePath)) {
+		filePath = "D:\\SteamLibrary\\steamapps\\common\\City Car Driving\\bin\\win32\\starter.exe";
+		if (!std::filesystem::exists(filePath)) {
+			EXIT_WITH_ERROR("[-] Error! starter.exe not found.");
+		}
+	}
+	if (!CreateProcessA(
+		filePath.c_str(),
 		NULL,
 		NULL,
 		NULL,
 		0,
 		DEBUG_PROCESS,
 		NULL,
-		szWorkDir,
+		NULL,
 		&si,
 		&pi
 	)) {
