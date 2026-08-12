@@ -2,13 +2,8 @@
 #include <string>
 #include <map>
 #include <TlHelp32.h>
-#include <format>
 #include <sstream>
 #include <Psapi.h>
-#include <locale>
-#include <iomanip>
-#include <stdexcept>
-#include <bitset>
 #include <vector>
 #include <filesystem>
 
